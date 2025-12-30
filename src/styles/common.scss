@@ -1,26 +1,16 @@
 // Colors
 $primary-color: #000000;
-$bg-color: #f9f9f9;
-$sidebar-bg: #ffffff;
-$card-bg: #ffffff;
+$sidebar-color: #ffffff;
 $text-main: #000000;
 $text-muted: #666666;
 $border-color: #dddddd;
 $danger-color: #ff4d4f;
 
-// Shadows
-$shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-$shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.1);
-
 :root {
   --primary-color: #{$primary-color};
-  --bg-color: #{$bg-color};
-  --sidebar-bg: #{$sidebar-bg};
-  --card-bg: #{$card-bg};
+  --sidebar-bg: #{$sidebar-color};
   --text-main: #{$text-main};
   --text-muted: #{$text-muted};
   --border-color: #{$border-color};
   --danger-color: #{$danger-color};
-  --shadow: #{$shadow};
-  --shadow-lg: #{$shadow-lg};
 }

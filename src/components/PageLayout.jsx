@@ -118,36 +118,26 @@ const PageLayout = ({ page, onUpdatePage, isPreview = false }) => {
         </div>
         <div className={cx("content")}>
           <div className={cx("left")}>
-            {page.image ? (
-              <>
-                <div className={cx("image")}>
-                  <img src={page.image} draggable="false" />
-                </div>
-                <div className={cx("markers")}>
-                  {page.markers.map((marker) => (
-                    <div
-                      key={marker.id}
-                      className={cx("marker")}
-                      style={{ left: `${marker.x}%`, top: `${marker.y}%` }}
-                    >
-                      {marker.number}
-                    </div>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <div className={cx("placeholder")} />
-            )}
-          </div>
-          <div className={cx("right")}>
-            <div className={cx("list")}>
+            <img className={cx("image")} src={page.image} draggable="false" />
+            <div className={cx("markers")}>
               {page.markers.map((marker) => (
-                <div key={marker.id} className={cx("item")}>
-                  <div className={cx("number")}>{marker.number}</div>
-                  <div className={cx("text")}>{marker.description}</div>
+                <div
+                  key={marker.id}
+                  className={cx("marker")}
+                  style={{ left: `${marker.x}%`, top: `${marker.y}%` }}
+                >
+                  {marker.number}
                 </div>
               ))}
             </div>
+          </div>
+          <div className={cx("right")}>
+            {page.markers.map((marker) => (
+              <div key={marker.id} className={cx("item")}>
+                <div className={cx("number")}>{marker.number}</div>
+                <div className={cx("text")}>{marker.description}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -158,7 +148,7 @@ const PageLayout = ({ page, onUpdatePage, isPreview = false }) => {
     <div className={cx("container")}>
       <div className={cx("header")}>
         <input
-          className={cx("titleInput")}
+          className={cx("title")}
           value={page.title}
           onChange={(e) => onUpdatePage({ ...page, title: e.target.value })}
           placeholder="Untitled"
@@ -172,9 +162,7 @@ const PageLayout = ({ page, onUpdatePage, isPreview = false }) => {
         >
           {page.image ? (
             <>
-              <div className={cx("image")}>
-                <img src={page.image} draggable="false" />
-              </div>
+              <img className={cx("image")} src={page.image} draggable="false" />
               <div className={cx("markers")}>
                 {page.markers.map((marker) => (
                   <div
@@ -206,7 +194,7 @@ const PageLayout = ({ page, onUpdatePage, isPreview = false }) => {
               className={cx("placeholder")}
               onClick={() => fileInputRef.current?.click()}
             >
-              <span>Click to upload screen image</span>
+              <span>Click to upload a image</span>
             </div>
           )}
           <input
@@ -218,29 +206,29 @@ const PageLayout = ({ page, onUpdatePage, isPreview = false }) => {
           />
         </div>
         <div className={cx("right")}>
-          <div className={cx("list")}>
-            {page.markers.length === 0 && (
-              <div className={cx("empty")}>Add markers for descriptions.</div>
-            )}
-            {page.markers.map((marker) => (
-              <div key={marker.id} className={cx("item")}>
-                <div className={cx("number")}>{marker.number}</div>
-                <textarea
-                  placeholder={`Marker ${marker.number}`}
-                  value={marker.description}
-                  onChange={(e) =>
-                    updateMarkerDescription(marker.id, e.target.value)
-                  }
-                />
-                <button
-                  className={cx("button")}
-                  onClick={() => removeMarker(marker.id)}
-                >
-                  &times;
-                </button>
-              </div>
-            ))}
-          </div>
+          {page.markers.length === 0 && (
+            <div className={cx("empty")}>
+              Double click on the image to add markers for descriptions
+            </div>
+          )}
+          {page.markers.map((marker) => (
+            <div key={marker.id} className={cx("item")}>
+              <div className={cx("number")}>{marker.number}</div>
+              <textarea
+                placeholder={`Marker ${marker.number}`}
+                value={marker.description}
+                onChange={(e) =>
+                  updateMarkerDescription(marker.id, e.target.value)
+                }
+              />
+              <button
+                className={cx("button")}
+                onClick={() => removeMarker(marker.id)}
+              >
+                <RiCloseLine size={16} color="gray" />
+              </button>
+            </div>
+          ))}
         </div>
       </div>
     </div>
