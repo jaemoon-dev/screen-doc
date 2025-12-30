@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Sidebar from "./components/Sidebar";
 import EditorArea from "./components/EditorArea";
+import PageLayout from "./components/PageLayout";
 import "./styles/global.scss";
 
 const App = () => {
@@ -54,6 +55,22 @@ const App = () => {
         activePage={pages[activePageIndex]}
         onUpdatePage={handleUpdatePage}
       />
+      {/* PDF 출력을 위한 숨겨진 컨테이너 */}
+      <div
+        id="export-container"
+        style={{
+          position: "absolute",
+          top: "-10000px",
+          left: "-10000px",
+          width: "1123px", // A4 Landscape width
+        }}
+      >
+        {pages.map((page, index) => (
+          <div key={index} className="export-page" data-page-index={index}>
+            <PageLayout page={page} isPreview={true} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

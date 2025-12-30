@@ -1,0 +1,23 @@
+@use "../styles/common.scss" as *;
+
+.container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 4px;
+  padding: 4px;
+
+  > .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    position: relative;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+}

@@ -3,10 +3,11 @@
 .container {
   flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f0f0f0;
+  flex-direction: column;
 
+  > .top {
+    height: 36px;
+  }
   > .content {
     flex: 1;
     display: flex;
