@@ -1,24 +1,21 @@
 @use "../styles/common.scss" as *;
 
 .container {
-  width: 1123px;
-  height: 794px;
-  background-color: $sidebar-color;
   display: flex;
   flex-direction: column;
-  padding: 60px;
   gap: 32px;
-  box-sizing: border-box;
-  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.1);
+  width: 1200px;
+  height: calc(1200px / 1.414);
+  padding: 48px;
+  background-color: white;
+  box-shadow: 0px 12px 24px rgba(black, 0.1);
 
   > .header {
-    margin-bottom: 8px;
-
     > .title {
       width: 100%;
       border: none;
       outline: none;
-      font-size: 36px;
+      font-size: 28px;
       font-weight: 800;
       color: $text-main;
 
@@ -29,13 +26,13 @@
   }
   > .content {
     display: flex;
+    flex-direction: row;
     flex: 1;
-    max-height: 590px;
     gap: 40px;
+    max-height: 680px;
 
     > .left {
       position: relative;
-      flex: 1;
       border: 1px solid $border-color;
       border-radius: 12px;
       overflow: hidden;
@@ -56,10 +53,7 @@
       }
       > .markers {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        inset: 0;
         pointer-events: none;
         z-index: 20;
 
@@ -73,8 +67,9 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 12px;
+          font-size: 11px;
           font-weight: 700;
+          padding-bottom: 2px;
           transform: translate(-50%, -50%);
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
           border: 2px solid $sidebar-color;
@@ -149,20 +144,12 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
       overflow-y: auto;
 
-      > .empty {
-        font-size: 14px;
-        color: $text-muted;
-        text-align: center;
-        margin-top: 40px;
-      }
       > .item {
         display: flex;
         gap: 12px;
-        align-items: flex-start;
-        padding-right: 8px;
 
         &:hover {
           > .button {
@@ -178,26 +165,19 @@
           background-color: $primary-color;
           color: white;
           border-radius: 50%;
-          font-size: 11px;
+          font-size: 12px;
           font-weight: 800;
-          margin-top: 8px;
+          padding-bottom: 2px;
         }
         > textarea {
           flex: 1;
           resize: none;
-          padding: 8px 12px;
-          border: 1px solid $border-color;
-          border-radius: 6px;
-          background-color: #fafafa;
-          font-size: 15px;
+          font-size: 14px;
           line-height: 1.5;
           outline: none;
+          border: none;
           min-height: 40px;
           field-sizing: content;
-
-          &:focus {
-            border-color: $primary-color;
-          }
         }
         > .text {
           flex: 1;

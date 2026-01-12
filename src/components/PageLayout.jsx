@@ -206,11 +206,6 @@ const PageLayout = ({ page, onUpdatePage, isPreview = false }) => {
           />
         </div>
         <div className={cx("right")}>
-          {page.markers.length === 0 && (
-            <div className={cx("empty")}>
-              Double click on the image to add markers for descriptions
-            </div>
-          )}
           {page.markers.map((marker) => (
             <div key={marker.id} className={cx("item")}>
               <div className={cx("number")}>{marker.number}</div>

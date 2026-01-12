@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Sidebar from "./components/Sidebar";
 import EditorArea from "./components/EditorArea";
@@ -6,22 +6,25 @@ import PageLayout from "./components/PageLayout";
 import "./styles/global.scss";
 
 const App = () => {
-  const [pages, setPages] = useState([{ title: "", image: null, markers: [] }]);
+  const createPage = () => ({ title: "", image: null, markers: [] });
+
+  const [pages, setPages] = useState([createPage()]);
   const [activePageIndex, setActivePageIndex] = useState(0);
 
   const handleAddPage = () => {
-    setPages([...pages, { title: "", image: null, markers: [] }]);
+    setPages([...pages, createPage()]);
     setActivePageIndex(pages.length);
   };
 
-  const handleDeletePage = (index) => {
-    if (pages.length <= 1) {
-      setPages([{ image: null, markers: [] }]);
+  const handleDeletePage = (targetIndex) => {
+    if (pages.length === 1) {
+      setPages([createPage()]);
       setActivePageIndex(0);
       return;
     }
 
-    const newPages = pages.filter((_, pageIndex) => pageIndex !== index);
+    const newPages = [...pages];
+    newPages.splice(targetIndex, 1);
     setPages(newPages);
 
     if (activePageIndex >= newPages.length) {
@@ -34,6 +37,63 @@ const App = () => {
     newPages[activePageIndex] = updatedPage;
     setPages(newPages);
   };
+
+  const handleOpenPages = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "application/json";
+    input.onchange = (event) => {
+      const file = event.target.files?.[0];
+      if (!file) {
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(reader.result);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setPages(parsed);
+          } else if (Array.isArray(parsed)) {
+            setPages([createPage()]);
+          }
+          setActivePageIndex(0);
+        } catch {
+          //
+        }
+      };
+      reader.readAsText(file);
+    };
+    input.click();
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.metaKey && event.key.toLowerCase() === "o") {
+        event.preventDefault();
+        handleOpenPages();
+        return;
+      }
+
+      if (event.metaKey && event.key.toLowerCase() === "s") {
+        event.preventDefault();
+        const payload = JSON.stringify(pages, null, 2);
+        const blob = new Blob([payload], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `pages_${Date.now()}.json`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [pages]);
 
   return (
     <div
