@@ -31,6 +31,7 @@ const PageLayout = ({ page, onUpdatePage, isPreview = false }) => {
       number: page.markers.length + 1,
       x,
       y,
+      title: "",
       description: "",
     };
 
@@ -97,6 +98,14 @@ const PageLayout = ({ page, onUpdatePage, isPreview = false }) => {
   const updateMarkerDescription = (id, text) => {
     const updatedMarkers = page.markers.map((marker) =>
       marker.id === id ? { ...marker, description: text } : marker
+    );
+
+    onUpdatePage({ ...page, markers: updatedMarkers });
+  };
+
+  const updateMarkerTitle = (id, text) => {
+    const updatedMarkers = page.markers.map((marker) =>
+      marker.id === id ? { ...marker, title: text } : marker
     );
 
     onUpdatePage({ ...page, markers: updatedMarkers });
@@ -209,13 +218,21 @@ const PageLayout = ({ page, onUpdatePage, isPreview = false }) => {
           {page.markers.map((marker) => (
             <div key={marker.id} className={cx("item")}>
               <div className={cx("number")}>{marker.number}</div>
-              <textarea
-                placeholder={`Marker ${marker.number}`}
-                value={marker.description}
-                onChange={(e) =>
-                  updateMarkerDescription(marker.id, e.target.value)
-                }
-              />
+              <div className={cx("fields")}>
+                <input
+                  type="text"
+                  placeholder={`Marker ${marker.number} Title`}
+                  value={marker.title}
+                  onChange={(e) => updateMarkerTitle(marker.id, e.target.value)}
+                />
+                <textarea
+                  placeholder={`Marker ${marker.number}`}
+                  value={marker.description}
+                  onChange={(e) =>
+                    updateMarkerDescription(marker.id, e.target.value)
+                  }
+                />
+              </div>
               <button
                 className={cx("button")}
                 onClick={() => removeMarker(marker.id)}
